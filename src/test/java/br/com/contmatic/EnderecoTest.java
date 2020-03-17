@@ -1,4 +1,4 @@
-package br.com.contmatic.empresa;
+package br.com.contmatic;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -8,8 +8,11 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import br.com.contmatic.Endereco;
@@ -59,27 +62,31 @@ public class EnderecoTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void deve_retornar_exception_se_rua_estiver_em_branco() {
-		endereco.setRua("     ");
+		endereco.setRua("   		  ");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
+	public void deve_retornar_exception_se_os_digitos_do_cep_for_maior_que_8() {
+		endereco.setCep("12345678910");
+	}
+	@Test(expected = IllegalArgumentException.class)
 	public void deve_retornar_exception_se_houver_letra_em_cep() {
-		endereco.setCep("abc133584");
+		endereco.setCep("abc13358");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void deve_retornar_exception_se_cep_estiver_em_branco() {
-		endereco.setCep("   ");
+		endereco.setCep("  		 ");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void deve_retornar_exception_se_houver_letra_em_numerocasa() {
-		endereco.setNumeroCasa("sa");
+		endereco.setNumeroCasa("sfdsafdsadasa");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void deve_retornar_exception_se_numerocasa_estiver_em_branco() {
-		endereco.setNumeroCasa("    ");
+		endereco.setNumeroCasa("  		  ");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -89,7 +96,7 @@ public class EnderecoTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void deve_retornar_exception_se_bairro_estiver_em_branco() {
-		endereco.setBairro("     ");
+		endereco.setBairro("   		  ");
 	}
 
 	@Test
@@ -130,41 +137,14 @@ public class EnderecoTest {
 	}
 
 	@Test
-	public void deve_retornar_false_se_endereco_for_igual_a_endereco2_nulo() {
-		endereco2 = new Endereco(null, null, null, null);
-		assertFalse(endereco.equals(endereco2));
-	}
-
-	@Test
-	public void deve_retornar_false_se_cep_for_nulo_e_cep2_for_diferente_de_nulo() {
-		endereco2 = new Endereco("Fernandes Portalegre", null, "123456", "Jardim Maringá");
-		assertFalse(endereco2.equals(endereco));
-	}
-
-	@Test
-	public void deve_retornar_true_se_cep01_e_cep02_forem_iguais_a_nulo() {
-		Endereco endereco01 = new Endereco("Fernandes Portalegre", null, "123456", "Jardim Maringá");
-		endereco2 = new Endereco("Fernandes Portalegre", null, "123456", "Jardim Maringá");
-		assertTrue(endereco2.equals(endereco01));
-	}
-
-	@Test
-	public void deve_retornar_true_se_numerocasa_for_nulo_e_numerocasa2_for_diferente_de_nulo() {
-		endereco2 = new Endereco("Fernandes Portalegre", "03523000", null, "Jardim Maringá");
-		assertFalse(endereco2.equals((endereco)));
-	}
-
-	@Test
-	public void deve_retornar_true_se_numerocasa_for_diferente_a_numerocasa2() {
+	public void deve_retornar_true_se_numerocasa_for_diferente_ao_numerocasa2() {
 		endereco2 = new Endereco("Fernandes Portalegre", "03523000", "123456", "Jardim Maringá");
 		assertFalse(endereco.equals((endereco2)));
 	}
-
 	@Test
-	public void deve_retornar_true_se_numerocasa1_e_numerocasa02_forem_nulos() {
-		Endereco endereco03 = new Endereco("Fernandes Portalegre", "03523000", null, "Jardim Maringá");
-		endereco2 = new Endereco("Fernandes Portalegre", "03523000", null, "Jardim Maringá");
-		assertTrue(endereco2.equals(endereco03));
+	public void deve_retornar_false_se_o_equals_do_cep_for_diferente_do_cep2() {
+		endereco2 = new Endereco("Fernandes Portalegre", "12345678", "123456", "Jardim Maringá");
+		assertFalse(endereco.equals((endereco2)));
 	}
 
 	@Test
@@ -189,5 +169,47 @@ public class EnderecoTest {
 	@Test
 	public void deve_retornar_true_se_bairro_estiver_em_tostring() {
 		assertThat(endereco.toString(), containsString("bairro"));
+	}
+	
+	@Test
+	public void deve_retornar_false_se_rua2_estiver_em_tostring() {
+		assertThat(endereco.toString(),is(not(containsString("rua2"))));
+	}
+	@Test
+	public void deve_retornar_false_se_cep2_estiver_em_tostring() {
+		assertThat(endereco.toString(),is(not(containsString("cep2"))));
+	}
+	@Test
+	public void deve_retornar_false_se_numerocasa2_estiver_em_tostring() {
+		assertThat(endereco.toString(),is(not(containsString("numerocasa2"))));
+	}
+
+	@Test
+	public void deve_retornar_false_se_bairro2_estiver_em_tostring() {
+		assertThat(endereco.toString(),is(not(containsString("bairro2"))));
+	}
+
+	@Test(timeout = 150)
+	public void deve_retornar_true_se_cep2_for_igual_a_ele_mesmo_usando_hashcode() {
+		Endereco endereco2 = new Endereco("Fernandes Portalegre", "03523000", "774", "Jardim Maringá");
+		assertThat(endereco2.hashCode(), is(endereco2.hashCode()));
+	}
+	@Test
+	@Ignore
+	public void o_mesmo_teste_anterior_para_usar_ignore_test() {
+		Endereco endereco2 = new Endereco("Fernandes Portalegre", "03523000", "774", "Jardim Maringá");
+		assertThat(endereco2.hashCode(), is(endereco2.hashCode()));
+		System.out.println();
+	}
+	
+	@After
+	public void tearDown() {
+		endereco = null;
+		endereco2 = null;
+	}
+
+	@AfterClass
+	public static void tearDownAfterClass() {
+		System.out.println("Aqui finalizamos os Testes");
 	}
 }

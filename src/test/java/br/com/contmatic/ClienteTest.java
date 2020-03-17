@@ -1,21 +1,29 @@
-package br.com.contmatic.empresa;
+package br.com.contmatic;
 
 import static org.junit.Assert.assertTrue;
+
+import org.junit.After;
+import org.junit.AfterClass;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import br.com.contmatic.Cliente;
 import br.com.contmatic.Endereco;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ClienteTest {
 
 	private Cliente cliente;
@@ -23,7 +31,7 @@ public class ClienteTest {
 	private Cliente cliente2;
 
 	@BeforeClass
-	public static void Inicio_testes() {
+	public static void setUpBeforeClass() {
 		System.out.println("Aqui se inicia os Testes");
 	}
 
@@ -46,6 +54,11 @@ public class ClienteTest {
 	@Test
 	public void nao_deve_aceitar_telefone_nulo() {
 		assertNotNull(cliente.getTelefone());
+	}
+
+	@Test
+	public void nao_deve_aceitar_endereco_nulo() {
+		assertNotNull(cliente.getEndereco());
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -93,23 +106,28 @@ public class ClienteTest {
 		cliente.setTelefone("                 ");
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void deve_retornar_exception_se_endereco_for_nulo() {
+		cliente.setEndereco(null);
+	}
+
 	@Test
 	public void deve_retornar_true_se_telefone1_for_igual_a_ele_mesmo() {
-		assertTrue(cliente.getTelefone().equals(cliente.getTelefone()));
+		assertTrue(cliente.getNome().equals(cliente.getNome()));
 	}
 
 	@Test
 	public void deve_retornar_true_se_telefone1_for_igual_a_telefone2() {
 		cliente2 = new Cliente("Gabriel", "23666158846", "11963220164",
 				new Endereco("FernandesPortalegre", "03523000", "774", "JardimMaringá"));
-		assertTrue(cliente.getTelefone().equals(cliente2.getTelefone()));
+		assertTrue(cliente.getNome().equals(cliente2.getNome()));
 	}
 
 	@Test
 	public void deve_retornar_true_se_telefone1_for_diferente_do_telefone2() {
-		cliente2 = new Cliente("FULANO", "12345678910", "11912345678",
+		cliente2 = new Cliente("FULANO", "23666158846", "11963220164",
 				new Endereco("FernandesPortalegre", "03523000", "774", "JardimMaringá"));
-		assertThat(cliente.getTelefone(), is(not(cliente2.getTelefone())));
+		assertThat(cliente.getNome(), is(not(cliente2.getNome())));
 	}
 
 	@Test
@@ -132,27 +150,24 @@ public class ClienteTest {
 	}
 
 	@Test
-	public void deve_retornar_true_se_cliente1_for_diferente_do_cliente2() {
-		cliente2 = new Cliente("FULANO", "12345678910", "11912345678",
+	public void deve_retornar_false_se_nome_do_cliente1_for_diferente_de_nome_do_cliente2() {
+		cliente2 = new Cliente("FULANO", "23666158846", "11963220164",
 				new Endereco("FernandesPortalegre", "03523000", "774", "JardimMaringá"));
-		assertTrue(cliente != (cliente2));
+		assertThat(cliente, is(not(cliente2)));
 	}
 
 	@Test
-	public void deve_retornar_false_se_cpf_for_nulo_e_cpf2_for_diferente_de_nulo() {
-		Cliente cliente2 = new Cliente("FULANO", null, "11912345678",
+	public void deve_retornar_false_se_cpf_do_cliente1_for_diferente_de_cpf_do_cliente2() {
+		cliente2 = new Cliente("Gabriel", "12345678910", "11963220164",
 				new Endereco("FernandesPortalegre", "03523000", "774", "JardimMaringá"));
-		assertFalse(cliente2.equals(cliente));
+		assertThat(cliente, is(not(cliente2)));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void deve_retornar_true_se_cpf01_e_cpf02_forem_iguais_a_nulo() {
-		Cliente cliente = new Cliente("FULANO", "12345678911", "11912345678",
+	@Test
+	public void deve_retornar_true_se_cliente1_for_igual_ao_cliente2() {
+		cliente2 = new Cliente("Gabriel", "23666158846", "11963220164",
 				new Endereco("FernandesPortalegre", "03523000", "774", "JardimMaringá"));
-		Cliente cliente2 = new Cliente("FULANO", null, "11912345678",
-				new Endereco("FernandesPortalegre", "03523000", "774", "JardimMaringá"));
-		assertNull(cliente.getCpf());
-//		assertNull(cliente2.getCpf());
+		assertTrue(cliente.equals(cliente2));
 	}
 
 	@Test
@@ -171,33 +186,74 @@ public class ClienteTest {
 	}
 
 	@Test
-	public void deve_retornar_true_se_endereco_for_igual_a_endereco2() {
-		Cliente cliente2 = new Cliente("Gabriel", "23666158846", "1196322-0164",
-				new Endereco("Fernandes Portalegre", "03523000", "774", "Jardim Maringá"));
-		assertTrue(cliente.equals(cliente2));
+	public void deve_retornar_true_se_nome_estiver_em_tostring() {
+		assertThat(cliente.toString(), containsString("nome"));
 	}
 
 	@Test
-	public void deve_retornar_false_se_cliente_for_diferente_a_cliente2_nulo() {
-		Cliente cliente2 = new Cliente(null, null, null, null);
-		assertFalse(cliente.equals(cliente2));
+	public void deve_retornar_true_se_cpf_estiver_em_tostring() {
+		assertThat(cliente.toString(), containsString("cpf"));
 	}
+
 	@Test
-	public void deve_retornar_false_se_cpf_for_diferente_a_cpf2_nulo() {
-		Cliente cliente2 = new Cliente(null, null, null, null);
-		assertFalse(cliente.equals(cliente2));
+	public void deve_retornar_true_se_numero_estiver_em_tostring() {
+		assertThat(cliente.toString(), containsString("numero"));
 	}
+
 	@Test
+	public void deve_retornar_true_se_endereco_estiver_em_tostring() {
+		assertThat(cliente.toString(), containsString("endereco"));
+	}
+
+	@Test
+	public void deve_retornar_false_se_nome2_estiver_em_tostring() {
+		assertThat(cliente.toString(), is(not(containsString("nome2"))));
+	}
+
+	@Test
+	public void deve_retornar_false_se_cpf2_estiver_em_tostring() {
+		assertThat(cliente.toString(), is(not(containsString("cpf2"))));
+	}
+
+	@Test
+	public void deve_retornar_false_se_numero2_estiver_em_tostring() {
+		assertThat(cliente.toString(), is(not(containsString("numero2"))));
+	}
+
+	@Test
+	public void deve_retornar_false_se_idade2_estiver_em_tostring() {
+		assertThat(cliente.toString(), is(not(containsString("idade2"))));
+	}
+
+	@Test
+	public void deve_retornar_false_se_endereco2_estiver_em_tostring() {
+		assertThat(cliente.toString(), is(not(containsString("endereco2"))));
+	}
+
+	@Test(timeout = 200)
 	public void deve_retornar_true_se_cpf2_for_igual_a_ele_mesmo_usando_hashcode() {
-		Cliente cliente2 = new Cliente("Gabriel", "23666158846", "1196322-0164",
+		Cliente cliente2 = new Cliente("Gabriel", "23666158846", "11963220164",
 				new Endereco("Fernandes Portalegre", "03523000", "774", "Jardim Maringá"));
 		assertThat(cliente2.hashCode(), is(cliente2.hashCode()));
 	}
+
 	@Test
-	public void deve_retornar_true_se_cpf2_for_nulo_usando_hashcode() {
-		Cliente cliente2 = new Cliente("Gabriel", null, "11963220164",
+	@Ignore
+	public void o_mesmo_teste_anterior_para_usar_ignore_test() {
+		Cliente cliente2 = new Cliente("Gabriel", "23666158846", "11963220164",
 				new Endereco("Fernandes Portalegre", "03523000", "774", "Jardim Maringá"));
 		assertThat(cliente2.hashCode(), is(cliente2.hashCode()));
 	}
-	
+
+	@After
+	public void tearDown() {
+		cliente = null;
+		cliente2 = null;
+	}
+
+	@AfterClass
+	public static void tearDownAfterClass() {
+		System.out.println("Aqui finalizamos os Testes");
+	}
+
 }

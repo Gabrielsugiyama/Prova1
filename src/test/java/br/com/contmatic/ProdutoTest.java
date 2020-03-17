@@ -1,4 +1,4 @@
-package br.com.contmatic.empresa;
+package br.com.contmatic;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -7,8 +7,11 @@ import static org.junit.Assert.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import br.com.contmatic.Produto;
@@ -121,8 +124,7 @@ public class ProdutoTest {
 	@Test
 	public void deve_retornar_true_se_codigo_do_produto1_for_diferente_do_codigo_do_produto2() {
 		Produto produto2 = new Produto("Etios", 12000.00, "Toyota", "1");
-//		assertThat(produto1.getCodigoProduto(), is(not(produto2.getCodigoProduto())));
-		assertFalse(produto1.equals(produto2));
+		assertTrue(produto1.equals(produto2));
 	}
 
 	@Test
@@ -164,19 +166,6 @@ public class ProdutoTest {
 	}
 
 	@Test
-	public void deve_retornar_false_se_codigo_do_produto2_for_nulo_e_codigo_do_produto1_for_diferente_de_nulo() {
-		Produto produto2 = new Produto("Etios", 12000.00, "Toyota", null);
-		assertFalse(produto2.equals(produto1));
-	}
-
-	@Test
-	public void deve_retornar_true_se_codigo_do_produto1_e_codigo_do_produto2_forem_iguais_a_nulo() {
-		Produto produto1 = new Produto("Etios", 12000.00, "Toyota", null);
-		Produto produto2 = new Produto("Etios", 12000.00, "Toyota", null);
-		assertTrue(produto2.equals(produto1));
-	}
-
-	@Test
 	public void deve_retornar_true_se_produto1_for_igual_a_ele_mesmo() {
 		assertTrue(produto1.equals(produto1));
 	}
@@ -199,13 +188,25 @@ public class ProdutoTest {
 	}
 
 	@Test
-	public void deve_retornar_false_se_codigo_do_produto1_for_diferente_a_codigo_do_produto2_nulo() {
-		Produto produto2 = new Produto("Carro", 1.00, "Toyota", null);
-		assertFalse(produto1.equals(produto2));
-	}
-	@Test
 	public void deve_retornar_true_se_cpf2_for_igual_a_ele_mesmo_usando_hashcode() {
 		Produto produto2 = new Produto("Etios", 12000.00, "Toyota", "1");
 		assertThat(produto2.hashCode(), is(produto2.hashCode()));
+	}
+	
+	@Test
+	@Ignore
+	public void o_mesmo_teste_anterior_para_usar_ignore_test() {
+		Produto produto2 = new Produto("Etios", 12000.00, "Toyota", "1");
+		assertThat(produto2.hashCode(), is(produto2.hashCode()));
+	}
+	
+	@After
+	public void tearDown() {
+		produto1 = null;
+	}
+
+	@AfterClass
+	public static void tearDownAfterClass() {
+		System.out.println("Aqui finalizamos os Testes");
 	}
 }

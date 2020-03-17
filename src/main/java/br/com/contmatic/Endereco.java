@@ -34,7 +34,7 @@ public class Endereco {
 	}
 
 	public void setRua(String rua) {
-		if (rua == null || rua.trim().isEmpty() || 5 > rua.length() || 50 > rua.length() ) {
+		if (rua == null || rua.trim().isEmpty() || rua.length() < 5 || rua.length() > 50) {
 			throw new IllegalArgumentException("Rua invalido");
 		} else {
 			for (int i = 0; i < rua.length(); i++) {
@@ -48,11 +48,11 @@ public class Endereco {
 	}
 
 	public void setCep(String cep) {
-		if (cep == null || cep.trim().isEmpty() || 0 > cep.length() || 7 > cep.length()) {
+		if (cep == null || cep.trim().isEmpty() || cep.length() < 0 || cep.length() > 8 ) {
 			throw new IllegalArgumentException("Cep invalido");
 		} else {
 			for (int i = 0; i < cep.length(); i++) {
-				if (Character.isDigit(cep.charAt(i))) {
+				if (Character.isLetter(cep.charAt(i))) {
 					throw new IllegalArgumentException("Erro o CEP pode conter apenas numeros");
 				} else {
 					this.cep = cep;
@@ -62,7 +62,7 @@ public class Endereco {
 	}
 
 	public void setNumeroCasa(String numeroCasa) {
-		if (numeroCasa == null || numeroCasa.trim().isEmpty()) {
+		if (numeroCasa == null || numeroCasa.trim().isEmpty() || numeroCasa.length() < 0) {
 			throw new IllegalArgumentException("NumeroCasa invalido");
 		} else {
 			for (int i = 0; i < numeroCasa.length(); i++) {
@@ -105,15 +105,9 @@ public class Endereco {
 		if (getClass() != obj.getClass())
 			return false;
 		Endereco other = (Endereco) obj;
-		if (cep == null) {
-			if (other.cep != null)
-				return false;
-		} else if (!cep.equals(other.cep))
+		if (!cep.equals(other.cep))
 			return false;
-		if (numeroCasa == null) {
-			if (other.numeroCasa != null)
-				return false;
-		} else if (!numeroCasa.equals(other.numeroCasa))
+		if (!numeroCasa.equals(other.numeroCasa))
 			return false;
 		return true;
 	}

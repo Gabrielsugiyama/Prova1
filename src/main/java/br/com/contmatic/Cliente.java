@@ -69,14 +69,18 @@ public class Cliente {
 				if (Character.isLetter(cpf.charAt(i))) {
 					throw new IllegalArgumentException("Erro o CPF pode conter apenas numeros");
 				} else {
-				this.cpf = cpf;
+					this.cpf = cpf;
 				}
 			}
 		}
 	}
 
 	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
+		if (endereco == null) {
+			throw new IllegalArgumentException("Erro o nome tem que ser preenchido!!");
+		} else {
+			this.endereco = endereco;
+		}
 	}
 
 	public int hashCode() {
@@ -94,10 +98,9 @@ public class Cliente {
 		if (getClass() != obj.getClass())
 			return false;
 		Cliente other = (Cliente) obj;
-		if (cpf == null) {
-			if (other.cpf != null)
-				return false;
-		} else if (!cpf.equals(other.cpf))
+		if (!nome.equals(other.nome))
+			return false;
+		if (!cpf.equals(other.cpf))
 			return false;
 		return true;
 	}

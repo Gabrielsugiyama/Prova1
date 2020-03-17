@@ -1,10 +1,10 @@
-package br.com.contmatic.empresa;
+package br.com.contmatic;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({FabricanteTest.class, ProdutoTest.class, EnderecoTest.class, ClienteTest.class})
+@SuiteClasses({ClienteTest.class, EnderecoTest.class, FabricanteTest.class, FuncionarioTest.class, ProdutoTest.class})
 public class RunnerTest {
 }

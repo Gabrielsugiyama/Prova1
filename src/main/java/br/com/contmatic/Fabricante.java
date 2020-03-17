@@ -6,14 +6,15 @@ public class Fabricante {
 
 	private String cnpj;
 
-	private int id;
-
 	private Produto produto;
 
 	private Endereco endereco;
 
-	public int getId() {
-		return id;
+	public Fabricante(String nome, String cnpj, Produto produto, Endereco endereco) {
+		setNome(nome);
+		setCnpj(cnpj);
+		setProduto(produto);
+		setEndereco(endereco);
 	}
 
 	public Produto getProduto() {
@@ -33,7 +34,7 @@ public class Fabricante {
 	}
 
 	public void setNome(String nome) {
-		if (nome == null || nome.isEmpty()) {
+		if (nome == null || nome.trim().isEmpty()) {
 			throw new IllegalArgumentException("Erro o nome tem que ser preenchido!!");
 		} else {
 			for (int i = 0; i < nome.length(); i++) {
@@ -47,28 +48,44 @@ public class Fabricante {
 	}
 
 	public void setCnpj(String cnpj) {
-		this.cnpj = cnpj;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+		if (cnpj == null || cnpj.trim().isEmpty()) {
+			throw new IllegalArgumentException("Erro o nome tem que ser preenchido!!");
+		} else {
+			for (int i = 0; i < cnpj.length(); i++) {
+				if (Character.isDigit(cnpj.charAt(i))) {
+					this.cnpj = cnpj;
+				} else {
+					throw new IllegalArgumentException("Erro o nome pode conter apenas letras");
+				}
+			}
+		}
 	}
 
 	public void setProduto(Produto produto) {
-		this.produto = produto;
+		if (produto == null) {
+			throw new IllegalArgumentException("Erro o nome tem que ser preenchido!!");
+		} else {
+			this.produto = produto;
+		}
 	}
 
 	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
+		if (endereco == null ) {
+			throw new IllegalArgumentException("Erro o nome tem que ser preenchido!!");
+		} else {
+			this.endereco = endereco;
+		}
 	}
 
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + ((cnpj == null) ? 0 : cnpj.hashCode());
 		return result;
 	}
 
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -77,13 +94,14 @@ public class Fabricante {
 		if (getClass() != obj.getClass())
 			return false;
 		Fabricante other = (Fabricante) obj;
-		if (id != other.id)
+		if (!cnpj.equals(other.cnpj))
 			return false;
 		return true;
 	}
 
+	@Override
 	public String toString() {
-		return "Fabricante [id=" + id + ", produto=" + produto + "]";
+		return "Fabricante [nome=" + nome + ", cnpj=" + cnpj + ", produto=" + produto + ", endereco=" + endereco + "]";
 	}
 
 }
