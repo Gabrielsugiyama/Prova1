@@ -1,4 +1,6 @@
-package br.com.contmatic;
+package br.com.contmatic.produto;
+
+import br.com.contmatic.endereco.Endereco;
 
 public class Fabricante {
 
@@ -11,10 +13,10 @@ public class Fabricante {
 	private Endereco endereco;
 
 	public Fabricante(String nome, String cnpj, Produto produto, Endereco endereco) {
-		setNome(nome);
-		setCnpj(cnpj);
-		setProduto(produto);
-		setEndereco(endereco);
+	    this.setNome(nome);
+	    this.setCnpj(cnpj);
+	    this.setProduto(produto);
+	    this.setEndereco(endereco);
 	}
 
 	public Produto getProduto() {
