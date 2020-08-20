@@ -38,8 +38,8 @@ public class Empresa {
         return enderecos;
     }
 
-    public void setEnderecos(List<Endereco> enderecos) {
-        this.enderecos = enderecos;
+    public String getEmail() {
+        return email;
     }
 
     public String getRazaoSocial() {
@@ -53,6 +53,19 @@ public class Empresa {
     public String getCnpj() {
         return cnpj;
     }
+
+    public List<Cliente> getCliente() {
+        return clientes;
+    }
+
+    public List<Funcionario> getFuncionario() {
+        return funcionarios;
+    }
+
+    public List<Produto> getProduto() {
+        return produtos;
+    }
+
 
     public void setCnpj(String cnpj) {
         cnpjIsNull(cnpj);
@@ -78,10 +91,6 @@ public class Empresa {
         this.nomeFantasia = nomeFantasia;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public void setEmail(String email) {
         emailIsNull(email);
         emailIsEmpty(email);
@@ -90,27 +99,75 @@ public class Empresa {
     }
 
     public void setProduto(List<Produto> produtos) {
+        produtolIsNull(produtos);
+        produtoSocialIsEmpty(produtos);
         this.produtos = produtos;
     }
 
-    public List<Produto> getProduto() {
-        return produtos;
-    }
-
     public void setFuncionario(List<Funcionario> funcionarios) {
+        funcionariolIsNull(funcionarios);
+        funcionarioSocialIsEmpty(funcionarios);
         this.funcionarios = funcionarios;
     }
 
-    public List<Funcionario> getFuncionario() {
-        return funcionarios;
-    }
-
     public void setCliente(List<Cliente> clientes) {
+        clienteSocialIsEmpty(clientes);
+        clientelIsNull(clientes);
         this.clientes = clientes;
     }
 
-    public List<Cliente> getCliente() {
-        return clientes;
+    public void setEnderecos(List<Endereco> enderecos) {
+        enderecolIsNull(enderecos);
+        enderecoSocialIsEmpty(enderecos);
+        this.enderecos = enderecos;
+    }
+
+    private void enderecolIsNull(List<Endereco> enderecos) {
+        if (enderecos == null) {
+            throw new NullPointerException("O(s) endereco(s) não pode(m) ficar nulo(s)");
+        }
+    }
+
+    private void enderecoSocialIsEmpty(List<Endereco> enderecos) {
+        if (enderecos.isEmpty()) {
+            throw new IllegalArgumentException("O(s) endereco(s) não pode(m) ficar vazio(s)");
+        }
+    }
+
+    private void produtolIsNull(List<Produto> produtos) {
+        if (produtos == null) {
+            throw new NullPointerException("O(s) produto(s) não pode(m) ficar nulo(s)");
+        }
+    }
+
+    private void produtoSocialIsEmpty(List<Produto> produtos) {
+        if (produtos.isEmpty()) {
+            throw new IllegalArgumentException("O(s) produto(s) não pode(m) ficar vazio(s)");
+        }
+    }
+
+    private void funcionariolIsNull(List<Funcionario> funcionarios) {
+        if (funcionarios == null) {
+            throw new NullPointerException("O(s) funcionario(s) não pode(m) ficar nulo(s)");
+        }
+    }
+
+    private void funcionarioSocialIsEmpty(List<Funcionario> funcionarios) {
+        if (funcionarios.isEmpty()) {
+            throw new IllegalArgumentException("O(s) funcionario(s) não pode(m) ficar vazio(s)");
+        }
+    }
+
+    private void clientelIsNull(List<Cliente> clientes) {
+        if (clientes == null) {
+            throw new NullPointerException("O(s) funcionario(s) não pode(m) ficar nulo(s)");
+        }
+    }
+
+    private void clienteSocialIsEmpty(List<Cliente> clientes) {
+        if (clientes.isEmpty()) {
+            throw new IllegalArgumentException("O(s) funcionario(s) não pode(m) ficar vazio(s)");
+        }
     }
 
     private void emailIsNull(String email) {
@@ -121,32 +178,32 @@ public class Empresa {
 
     private void emailIsEmpty(String email) {
         if (email.isEmpty() || email.trim().equals("")) {
-            throw new IllegalArgumentException("O cnpj não pode ficar vazio");
+            throw new IllegalArgumentException("O email não pode ficar vazio");
         }
     }
 
     private void emailSizeValidation(String email) {
         if (email.length() < 0 || email.length() > 25) {
-            throw new IllegalArgumentException("A razaoSocial está errada");
+            throw new IllegalArgumentException("A email está errada");
         }
     }
 
     private void nomeFantasiaIsNull(String nomeFantasia) {
         if (nomeFantasia == null) {
-            throw new NullPointerException("A razaoSocial não pode ficar nulo");
+            throw new NullPointerException("A email não pode ficar nulo");
         }
     }
 
     private void nomeFantasiaIsEmpty(String nomeFantasia) {
         if (nomeFantasia.isEmpty() || nomeFantasia.trim().equals("")) {
-            throw new IllegalArgumentException("O cnpj não pode ficar vazio");
+            throw new IllegalArgumentException("O nomeFantasia não pode ficar vazio");
         }
     }
 
     private void nomeFantasiaHasWord(String nomeFantasia) {
         for(int i = 0 ; i < nomeFantasia.length() ; i++) {
             if (Character.isDigit(nomeFantasia.charAt(i))) {
-                throw new IllegalArgumentException("Erro a razaoSocial pode conter apenas letras");
+                throw new IllegalArgumentException("Erro o nomeFantasia pode conter apenas letras");
             } else {
                 this.nomeFantasia = nomeFantasia;
             }
@@ -155,7 +212,7 @@ public class Empresa {
 
     private void nomeFantasiaSizeValidation(String nomeFantasia) {
         if (nomeFantasia.length() < 0 || nomeFantasia.length() > 25) {
-            throw new IllegalArgumentException("A razaoSocial está errada");
+            throw new IllegalArgumentException("O nomeFantasia está errada");
         }
     }
 
@@ -167,7 +224,7 @@ public class Empresa {
 
     private void razaoSocialIsEmpty(String razaoSocial) {
         if (razaoSocial.isEmpty() || razaoSocial.trim().equals("")) {
-            throw new IllegalArgumentException("O cnpj não pode ficar vazio");
+            throw new IllegalArgumentException("A razaoSocial não pode ficar vazio");
         }
     }
 
@@ -210,12 +267,8 @@ public class Empresa {
     }
 
     private boolean cnpjSizeValidation(String cnpj) {
-        if (cnpj.equals("00000000000000") || cnpj.equals("11111111111111") ||
-            cnpj.equals("22222222222222") || cnpj.equals("33333333333333") || 
-            cnpj.equals("44444444444444") || cnpj.equals("55555555555555") || 
-            cnpj.equals("66666666666666") || cnpj.equals("77777777777777") || 
-            cnpj.equals("88888888888888") || cnpj.equals("99999999999999") || 
-           (cnpj.length() != 14))
+        if (cnpj.equals("00000000000000") || cnpj.equals("11111111111111") || cnpj.equals("22222222222222") || cnpj.equals("33333333333333") || cnpj.equals("44444444444444") ||
+            cnpj.equals("55555555555555") || cnpj.equals("66666666666666") || cnpj.equals("77777777777777") || cnpj.equals("88888888888888") || cnpj.equals("99999999999999") || (cnpj.length() != 14))
             return (false);
 
         char dig13, dig14;

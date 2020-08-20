@@ -44,6 +44,37 @@ public class Funcionario {
         return dataNascimento;
     }
 
+    public void setNome(String nome) {
+        nomeIsNull(nome);
+        nomeIsEmpty(nome);
+        nomeSizeValidation(nome);
+        this.nome = nome;
+    }
+
+    public void setCpf(String cpf) {
+        cpfIsNull(cpf);
+        cpfIsEmpty(cpf);
+        cpfSizeValidation(cpf);
+        this.cpf = cpf;
+    }
+
+    public void setTelefone(String telefone) {
+        telefoneIsNull(telefone);
+        telefoneIsEmpty(telefone);
+        telefoneSizeValidation(telefone);
+        this.telefone = telefone;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        enderecoIsNull(endereco);
+        this.endereco = endereco;
+    }
+
+    public void setDataNascimento(Date dataNascimento) {
+        dataNascimentoIsNull(dataNascimento);
+        this.dataNascimento = dataNascimento;
+    }
+
     private void nomeIsNull(String nome) {
         if (nome == null) {
             throw new NullPointerException("O nome não pode ficar nulo");
@@ -127,38 +158,6 @@ public class Funcionario {
         if (endereco == null) {
             throw new NullPointerException("O endereco não pode ficar nulo");
         }
-    }
-
-    public void setNome(String nome) {
-        nomeIsNull(nome);
-        nomeIsEmpty(nome);
-        nomeSizeValidation(nome);
-        this.nome = nome;
-    }
-
-    public void setCpf(String cpf) {
-        cpfIsNull(cpf);
-        cpfIsEmpty(cpf);
-        cpfSizeValidation(cpf);
-        this.cpf = cpf;
-    }
-
-    public void setTelefone(String telefone) {
-        telefoneIsNull(telefone);
-        telefoneIsEmpty(telefone);
-        telefoneSizeValidation(telefone);
-        this.telefone = telefone;
-    }
-
-
-    public void setEndereco(Endereco endereco) {
-        enderecoIsNull(endereco);
-        this.endereco = endereco;
-    }
-
-    public void setDataNascimento(Date dataNascimento) {
-        dataNascimentoIsNull(dataNascimento);
-        this.dataNascimento = dataNascimento;
     }
 
     @Override

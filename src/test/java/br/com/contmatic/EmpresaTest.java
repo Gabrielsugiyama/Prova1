@@ -27,7 +27,7 @@ public class EmpresaTest {
     private Empresa empresa1;
 
     private Empresa empresa2;
-    
+
     private static List<Endereco> enderecos;
 
     @BeforeClass
@@ -38,6 +38,7 @@ public class EmpresaTest {
     @Before
     public void setUp() {
         enderecos = new ArrayList<>();
+        enderecos.add(new Endereco("FernandesPortalegre", "03523000", "774", "JardimMaringá", "São Paulo", "SP", "Brasil"));
         empresa1 = new Empresa("EmpresaTeste.LTDA", "Empresa", "Empresa01@hotmail.com", "12345678901234", enderecos);
     }
 
@@ -61,10 +62,10 @@ public class EmpresaTest {
         assertNotNull(empresa1.getEndereco());
     }
 
-//    @Test(expected = IllegalArgumentException.class)
-//    public void deve_retornar_exception_se_houver_numero_em_nome() {
-//        empresa1.setNomeFantasia("Empresa1234");
-//    }
+    @Test(expected = IllegalArgumentException.class)
+    public void deve_retornar_exception_se_houver_numero_em_nome() {
+        empresa1.setNomeFantasia("Empresa1234");
+    }
 
     @Test(expected = NullPointerException.class)
     public void deve_retornar_exception_se_nomeFantasia_for_nulo() {
@@ -105,13 +106,7 @@ public class EmpresaTest {
     public void deve_retornar_exception_se_endereco_for_nulo() {
         empresa1.setEnderecos(null);
     }
-    
-    @Test
-    public void deve_retornar_true_se_houver_letra_em_cnpj() {
-        empresa2 = new Empresa("EmpresaTeste.LTDA", "Empresa", "Empresa01@hotmail.com", "12345678901234", enderecos);
-        assertTrue(empresa1.getCnpj().equals(empresa2.getCnpj()));
-    }
-    
+
     @Test
     public void deve_retornar_true_se_NomeFantasia_for_igual_a_ele_mesmo() {
         assertTrue(empresa1.getNomeFantasia().equals(empresa1.getNomeFantasia()));
@@ -239,7 +234,7 @@ public class EmpresaTest {
         Empresa empresa2 = new Empresa("EmpresaTesteDois.LTDA", "Empresa", "Empresa01@hotmail.com", "0", enderecos);
         assertThat(empresa2.hashCode(), is(0));
     }
-    
+
     @Test
     @Ignore
     public void o_mesmo_teste_anterior_para_usar_ignore_test() {

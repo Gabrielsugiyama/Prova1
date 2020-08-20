@@ -7,7 +7,7 @@ public class Endereco {
     private String cep;
 
     private String numero;
-    
+
     private String bairro;
 
     private String cidade;
@@ -54,102 +54,221 @@ public class Endereco {
         return pais;
     }
 
-    public void setRua(String rua) {
-        if (rua == null || rua.trim().isEmpty() || rua.length() < 5 || rua.length() > 50) {
-            throw new IllegalArgumentException("Rua invalido");
+    private void ruaIsNull(String rua) {
+        if (rua == null) {
+            throw new NullPointerException("A rua não pode ficar nulo");
+        }
+    }
+
+    private void ruaIsEmpty(String rua) {
+        if (rua.isEmpty() || rua.trim().equals("")) {
+            throw new IllegalArgumentException("A rua não pode ficar vazio");
+        }
+    }
+
+    private void ruaSizeValidation(String rua) {
+        if (rua.length() < 0 || rua.length() > 25) {
+            throw new IllegalArgumentException("A rua está errado");
         } else {
             for(int i = 0 ; i < rua.length() ; i++) {
-                if (Character.isDigit(rua.charAt(i))) {
-                    throw new IllegalArgumentException("Erro a Rua pode conter apenas letras");
-                } else {
+                if (Character.isLetter(rua.charAt(i))) {
                     this.rua = rua;
                 }
             }
         }
     }
 
-    public void setCep(String cep) {
-        if (cep == null || cep.trim().isEmpty() || cep.length() < 8 || cep.length() > 8) {
-            throw new IllegalArgumentException("Cep invalido");
+    private void cepIsNull(String cep) {
+        if (cep == null) {
+            throw new NullPointerException("O cep não pode ficar nulo");
+        }
+    }
+
+    private void cepIsEmpty(String cep) {
+        if (cep.isEmpty() || cep.trim().equals("")) {
+            throw new IllegalArgumentException("O cep não pode ficar vazio");
+        }
+    }
+
+    private void cepSizeValidation(String cep) {
+        if (cep.length() < 0 || cep.length() > 25) {
+            throw new IllegalArgumentException("O cep está errado");
         } else {
             for(int i = 0 ; i < cep.length() ; i++) {
                 if (Character.isLetter(cep.charAt(i))) {
-                    throw new IllegalArgumentException("Erro o CEP pode conter apenas numeros");
-                } else {
-                    this.cep = cep;
+                    throw new IllegalArgumentException("Erro o cep pode conter apenas numeros");
                 }
             }
         }
     }
 
-    public void setNumero(String numero) {
-        if (numero == null || numero.trim().isEmpty() || numero.length() < 0) {
-            throw new IllegalArgumentException("NumeroCasa invalido");
+    private void numeroIsNull(String numero) {
+        if (numero == null) {
+            throw new NullPointerException("O numero não pode ficar nulo");
+        }
+    }
+
+    private void numeroIsEmpty(String numero) {
+        if (numero.isEmpty() || numero.trim().equals("")) {
+            throw new IllegalArgumentException("O numero não pode ficar vazio");
+        }
+    }
+
+    private void numeroSizeValidation(String numero) {
+        if (numero.length() < 0 || numero.length() > 25) {
+            throw new IllegalArgumentException("O numero está errado");
         } else {
             for(int i = 0 ; i < numero.length() ; i++) {
                 if (Character.isLetter(numero.charAt(i))) {
                     throw new IllegalArgumentException("Erro o numero da casa pode conter apenas numeros");
-                } else {
-                    this.numero = numero;
                 }
             }
         }
     }
 
-    public void setBairro(String bairro) {
-        if (bairro == null || bairro.trim().isEmpty()) {
-            throw new IllegalArgumentException("Erro o Bairro tem que ser preenchido");
+    private void bairroIsNull(String bairro) {
+        if (bairro == null) {
+            throw new NullPointerException("O bairro não pode ficar nulo");
+        }
+    }
+
+    private void bairroIsEmpty(String bairro) {
+        if (bairro.isEmpty() || bairro.trim().equals("")) {
+            throw new IllegalArgumentException("O bairro não pode ficar vazio");
+        }
+    }
+
+    private void bairroSizeValidation(String bairro) {
+        if (bairro.length() < 0 || bairro.length() > 25) {
+            throw new IllegalArgumentException("O bairro está errado");
         } else {
             for(int i = 0 ; i < bairro.length() ; i++) {
-                if (Character.isDigit(bairro.charAt(i))) {
-                    throw new IllegalArgumentException("Erro o Bairro pode conter apenas letras");
-                } else {
+                if (Character.isLetter(bairro.charAt(i))) {
                     this.bairro = bairro;
                 }
             }
         }
     }
 
-    public void setCidade(String cidade) {
-        if (cidade == null || cidade.trim().isEmpty() || cidade.length() < 5 || cidade.length() > 50) {
-            throw new IllegalArgumentException("Rua invalido");
+    private void cidadeIsNull(String cidade) {
+        if (cidade == null) {
+            throw new NullPointerException("A cidade não pode ficar nulo");
+        }
+    }
+
+    private void cidadeIsEmpty(String cidade) {
+        if (cidade.isEmpty() || cidade.trim().equals("")) {
+            throw new IllegalArgumentException("A cidade não pode ficar vazio");
+        }
+    }
+
+    private void cidadeSizeValidation(String cidade) {
+        if (cidade.length() < 0 || cidade.length() > 25) {
+            throw new IllegalArgumentException("A cidade está errado");
         } else {
             for(int i = 0 ; i < cidade.length() ; i++) {
-                if (Character.isDigit(cidade.charAt(i))) {
-                    throw new IllegalArgumentException("Erro a Rua pode conter apenas letras");
-                } else {
+                if (Character.isLetter(cidade.charAt(i))) {
                     this.cidade = cidade;
                 }
             }
         }
     }
 
-    public void setEstado(String estado) {
-        if (estado == null || estado.trim().isEmpty() || estado.length() < 2 || estado.length() > 2) {
-            throw new IllegalArgumentException("Rua invalido");
+    private void estadoIsNull(String estado) {
+        if (estado == null) {
+            throw new NullPointerException("O estado não pode ficar nulo");
+        }
+    }
+
+    private void estadoIsEmpty(String estado) {
+        if (estado.isEmpty() || estado.trim().equals("")) {
+            throw new IllegalArgumentException("O estado não pode ficar vazio");
+        }
+    }
+
+    private void estadoSizeValidation(String estado) {
+        if (estado.length() < 0 || estado.length() > 25) {
+            throw new IllegalArgumentException("O estado está errado");
         } else {
             for(int i = 0 ; i < estado.length() ; i++) {
-                if (Character.isDigit(estado.charAt(i))) {
-                    throw new IllegalArgumentException("Erro a Rua pode conter apenas letras");
-                } else {
+                if (Character.isLetter(estado.charAt(i))) {
                     this.estado = estado;
                 }
             }
         }
     }
 
-    public void setPais(String pais) {
-        if (pais == null || pais.trim().isEmpty() || pais.length() < 2 || pais.length() > 2) {
-            throw new IllegalArgumentException("Rua invalido");
+    private void paisIsNull(String pais) {
+        if (pais == null) {
+            throw new NullPointerException("O pais não pode ficar nulo");
+        }
+    }
+
+    private void paisIsEmpty(String pais) {
+        if (pais.isEmpty() || pais.trim().equals("")) {
+            throw new IllegalArgumentException("O pais não pode ficar vazio");
+        }
+    }
+
+    private void paisSizeValidation(String pais) {
+        if (pais.length() < 0 || pais.length() > 25) {
+            throw new IllegalArgumentException("O pais está errado");
         } else {
             for(int i = 0 ; i < pais.length() ; i++) {
-                if (Character.isDigit(pais.charAt(i))) {
-                    throw new IllegalArgumentException("Erro a Rua pode conter apenas letras");
-                } else {
+                if (Character.isLetter(pais.charAt(i))) {
                     this.pais = pais;
                 }
             }
         }
+    }
+
+    public void setRua(String rua) {
+        ruaIsNull(rua);
+        ruaIsEmpty(rua);
+        ruaSizeValidation(rua);
+        this.rua = rua;
+    }
+
+    public void setCep(String cep) {
+        cepIsNull(cep);
+        cepIsEmpty(cep);
+        cepSizeValidation(cep);
+        this.cep = cep;
+    }
+
+    public void setNumero(String numero) {
+        numeroIsNull(numero);
+        numeroIsEmpty(numero);
+        numeroSizeValidation(numero);
+        this.numero = numero;
+    }
+
+    public void setBairro(String bairro) {
+        bairroIsNull(bairro);
+        bairroIsEmpty(bairro);
+        bairroSizeValidation(bairro);
+        this.bairro = bairro;
+    }
+
+    public void setCidade(String cidade) {
+        cidadeIsNull(cidade);
+        cidadeIsEmpty(cidade);
+        cidadeSizeValidation(cidade);
+        this.cidade = cidade;
+    }
+
+    public void setEstado(String estado) {
+        estadoIsNull(estado);
+        estadoIsEmpty(estado);
+        estadoSizeValidation(estado);
+        this.estado = estado;
+    }
+
+    public void setPais(String pais) {
+        paisIsNull(pais);
+        paisIsEmpty(pais);
+        paisSizeValidation(pais);
+        this.pais = pais;
     }
 
     public int hashCode() {
@@ -177,5 +296,4 @@ public class Endereco {
         return "Endereco [rua=" + rua + ", cep=" + cep + ", numero=" + numero + ", bairro=" + bairro + ", cidade=" + cidade + ", estado=" + estado + ", pais=" + pais + "]";
     }
 
-    
 }
